@@ -2,21 +2,13 @@
  * Mock data para métricas/reportes
  */
 
-export interface MockDriverMetrics {
-  total_orders_today: number;
-  completed_today: number;
-  revenue_today: number;
-  in_transit: number;
-  total_deliveries: number;
-  avg_rating?: number;
-  total_revenue: number;
-}
+import type { DriverMetrics } from '@/types/api';
 
 export const mockGetDriverMetrics = async (
   _driverId: string,
   _startDate?: string,
   _endDate?: string
-): Promise<MockDriverMetrics> => {
+): Promise<DriverMetrics> => {
   await new Promise((resolve) => setTimeout(resolve, 200));
 
   return {
