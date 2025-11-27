@@ -2,30 +2,9 @@
  * Mock data para driver/profile
  */
 
-export interface MockDriver {
-  id: string;
-  user_id: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  phone?: string;
-  identity_document: string;
-  driving_license: string;
-  date_of_birth: string;
-  availability_status: 'AVAILABLE' | 'BUSY' | 'OFFLINE' | 'SUSPENDED';
-  rating_avg?: number;
-  total_deliveries: number;
-  vehicle?: {
-    id: string;
-    vehicle_type: string;
-    license_plate: string;
-    brand: string;
-    model: string;
-    year: number;
-  };
-}
+import type { Driver } from '@/types/api';
 
-export const mockGetDriver = async (driverId: string): Promise<MockDriver> => {
+export const mockGetDriver = async (driverId: string): Promise<Driver> => {
   await new Promise((resolve) => setTimeout(resolve, 200));
 
   return {
@@ -54,11 +33,10 @@ export const mockGetDriver = async (driverId: string): Promise<MockDriver> => {
 
 export const mockUpdateDriver = async (
   driverId: string,
-  data: Partial<MockDriver>
-): Promise<MockDriver> => {
+  data: Partial<Driver>
+): Promise<Driver> => {
   await new Promise((resolve) => setTimeout(resolve, 300));
 
   const driver = await mockGetDriver(driverId);
   return { ...driver, ...data };
 };
-
