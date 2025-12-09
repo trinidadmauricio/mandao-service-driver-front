@@ -2,24 +2,14 @@
  * Mock data para autenticación
  */
 
+import type { LoginResponse } from '@/types/api';
+
 export interface MockLoginRequest {
   email: string;
   password: string;
 }
 
-export interface MockLoginResponse {
-  access_token: string;
-  user: {
-    id: string;
-    email: string;
-    first_name: string;
-    last_name: string;
-    role: 'DRIVER';
-    email_verified: boolean;
-  };
-}
-
-export const mockLogin = async (credentials: MockLoginRequest): Promise<MockLoginResponse> => {
+export const mockLogin = async (credentials: MockLoginRequest): Promise<LoginResponse> => {
   // Simular delay de red
   await new Promise((resolve) => setTimeout(resolve, 500));
 
