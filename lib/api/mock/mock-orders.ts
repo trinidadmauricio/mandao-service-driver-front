@@ -2,29 +2,9 @@
  * Mock data para órdenes
  */
 
-export interface MockOrder {
-  id: string;
-  order_number: string;
-  order_display_number: string;
-  tracking_code: string;
-  status: 'DRAFT' | 'PENDING' | 'CONFIRMED' | 'ASSIGNED' | 'IN_TRANSIT' | 'DELIVERED' | 'CANCELLED' | 'FAILED';
-  order_type: 'RETAIL' | 'ON_DEMAND';
-  created_at: string;
-  updated_at: string;
-  customer_name?: string;
-  customer_phone?: string;
-  delivery_address?: string;
-}
+import type { Order, OrdersResponse, OrderStatus } from '@/types/api';
 
-export interface MockOrdersResponse {
-  data: MockOrder[];
-  total: number;
-  page: number;
-  limit: number;
-  totalPages: number;
-}
-
-const mockOrders: MockOrder[] = [
+const mockOrders: Order[] = [
   {
     id: 'order-1',
     order_number: 'ORD-001',
@@ -74,7 +54,7 @@ export const mockGetOrders = async (
     limit?: number;
     search?: string;
   }
-): Promise<MockOrdersResponse> => {
+): Promise<OrdersResponse> => {
   await new Promise((resolve) => setTimeout(resolve, 300));
 
   let filtered = [...mockOrders];
@@ -107,7 +87,7 @@ export const mockGetOrders = async (
   };
 };
 
-export const mockGetOrder = async (orderId: string): Promise<MockOrder> => {
+export const mockGetOrder = async (orderId: string): Promise<Order> => {
   await new Promise((resolve) => setTimeout(resolve, 200));
 
   const order = mockOrders.find((o) => o.id === orderId);
@@ -120,7 +100,7 @@ export const mockGetOrder = async (orderId: string): Promise<MockOrder> => {
 
 export const mockUpdateOrderStatus = async (
   orderId: string,
-  status: MockOrder['status'],
+  status: OrderStatus,
   _notes?: string
 ): Promise<void> => {
   await new Promise((resolve) => setTimeout(resolve, 300));
