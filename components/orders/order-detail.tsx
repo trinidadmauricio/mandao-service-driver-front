@@ -6,7 +6,7 @@ import { UpdateStatusDialog } from './update-status-dialog';
 import { OrderTimeline } from './order-timeline';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { formatCurrency } from '@/lib/utils/currency';
+import { formatCurrency, type CurrencyCode } from '@/lib/utils/currency';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { Package, User, MapPin, Phone, Calendar, DollarSign } from 'lucide-react';
@@ -39,7 +39,7 @@ export function OrderDetail({ orderId }: OrderDetailProps) {
   }
 
   const total = order.order_summary_totals?.[0]?.total || 0;
-  const currency = order.order_summary_totals?.[0]?.currency || 'USD';
+  const currency = (order.order_summary_totals?.[0]?.currency || 'USD') as CurrencyCode;
 
   return (
     <div className="space-y-6">
@@ -140,7 +140,7 @@ export function OrderDetail({ orderId }: OrderDetailProps) {
           <CardContent>
             <div className="flex items-center justify-between">
               <span className="text-lg font-semibold">Total</span>
-              <span className="text-2xl font-bold">{formatCurrency(total, currency as any)}</span>
+              <span className="text-2xl font-bold">{formatCurrency(total, currency)}</span>
             </div>
           </CardContent>
         </Card>

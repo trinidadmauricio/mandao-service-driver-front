@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "nodemon",
+    "dev:next": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -52,6 +53,7 @@
     "eslint-config-next": "^15.0.0",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
+    "nodemon": "^3.1.11",
     "postcss": "^8.4.33",
     "tailwindcss": "^3.4.1",
     "tailwindcss-animate": "^1.0.7",
