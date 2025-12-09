@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -29,6 +30,7 @@ type ProfileFormValues = z.infer<typeof profileSchema>;
 export function ProfileForm() {
   const { data: driver, isLoading } = useDriver();
   const updateDriver = useUpdateDriver();
+  const initializedDriverId = useRef<string | null>(null);
 
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileSchema),
@@ -39,19 +41,23 @@ export function ProfileForm() {
     },
   });
 
-  // Actualizar valores cuando se carga el driver
-  if (driver && !form.formState.isDirty) {
-    form.reset({
-      first_name: driver.first_name,
-      last_name: driver.last_name,
-      phone: driver.phone || '',
-    });
-  }
+  // Actualizar valores cuando se carga el driver (solo una vez por driver)
+  useEffect(() => {
+    if (driver && driver.id !== initializedDriverId.current && !form.formState.isDirty) {
+      form.reset({
+        first_name: driver.first_name,
+        last_name: driver.last_name,
+        phone: driver.phone || '',
+      });
+      initializedDriverId.current = driver.id;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [driver?.id]);
 
   const onSubmit = async (data: ProfileFormValues) => {
     try {
       await updateDriver.mutateAsync(data);
-    } catch (error) {
+    } catch {
       // Error handling is done by the mutation
     }
   };

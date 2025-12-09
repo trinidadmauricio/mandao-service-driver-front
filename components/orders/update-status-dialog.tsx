@@ -92,7 +92,7 @@ export function UpdateStatusDialog({
       setOpen(false);
       form.reset();
       onSuccess?.();
-    } catch (error) {
+    } catch {
       // Error handling is done by the mutation
     }
   };
